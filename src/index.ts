@@ -11,6 +11,13 @@ function main(): void {
 	logger.info('Loading environment...')
 
 	const env = loadEnv()
+  if(!env.telegramBotToken) {
+    logger.error('Telegram bot token is missing. Please set the TELEGRAM_BOT_TOKEN environment variable.')
+    process.exit(1)
+  }
+  
+  logger.banner('Environment loaded successfully');
+
 	const bot = createTelegramBot(env.telegramBotToken)
 
 	bot.start({

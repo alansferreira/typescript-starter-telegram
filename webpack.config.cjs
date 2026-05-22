@@ -5,6 +5,21 @@ module.exports = {
   mode: 'production',
   target: 'node',
   externalsPresets: { node: true },
+  externals: [
+    ({ request }, callback) => {
+      const isPackageImport =
+        typeof request === 'string' &&
+        !request.startsWith('.') &&
+        !path.isAbsolute(request) &&
+        !request.startsWith('@/')
+
+      if (isPackageImport) {
+        return callback(null, `commonjs ${request}`)
+      }
+
+      return callback()
+    },
+  ],
   module: {
     rules: [
       {
@@ -21,7 +36,7 @@ module.exports = {
     }
   },
   optimization: {
-    minimize: true,
+    minimize: false,
     splitChunks: false,
     runtimeChunk: false,
   },

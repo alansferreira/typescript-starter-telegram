@@ -78,7 +78,7 @@ docker buildx build \
 
 Observacoes:
 - Passe o token por variavel de ambiente no runtime.
-- A imagem final contem apenas `dist/` + runtime Node distroless.
+- A imagem final contem `dist/` + `node_modules` de producao sobre runtime Node distroless.
 
 ## Estrutura principal
 

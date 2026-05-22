@@ -9,11 +9,13 @@ RUN --mount=type=cache,target=/root/.npm npm ci
 COPY tsconfig.json webpack.config.cjs ./
 COPY src ./src
 RUN npm run build
+RUN npm prune --omit=dev
 
 FROM gcr.io/distroless/nodejs22-debian12:nonroot AS runtime
 WORKDIR /app
 
 ENV NODE_ENV=production
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/dist ./
+COPY --from=build /app/node_modules ./node_modules
 
-CMD ["dist/index.js"]
+CMD ["index.js"]
