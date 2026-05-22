@@ -21,7 +21,7 @@ module.exports = {
     }
   },
   optimization: {
-    minimize: false,
+    minimize: true,
     splitChunks: false,
     runtimeChunk: false,
   },
